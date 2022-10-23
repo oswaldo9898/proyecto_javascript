@@ -1,17 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Caclculadora </title>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;700&display=swap" rel="stylesheet">
+
+  <!-- sweetalert2 -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- FONT AWESOME -->
+  <script src="https://kit.fontawesome.com/bb88356892.js" crossorigin="anonymous"></script>
+
+  <!-- CDN BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+  <!-- HOJA DE ESTILOS CSS -->
+  <link rel="stylesheet" rel="stylesheet" href="./assets/css/styles.css">
+
+
+  <title>Calculadora</title>
 </head>
+
 <body>
-  <header>
-    <div class="logo">Calculadora de subtotal y Total</div>
+  <!-- INICIO DE LA CABECERA -->
+  <header id="header">
+    <div class="wrap">
+      <div id="logo">
+        <div class="titulo">
+          <h3>PROYECTO DE JAVASCRIPT</h3>
+        </div>
+      </div>
+    </div>
   </header>
+  <!-- FIN DE LA CABECERA -->
+
+  <section class="wrap">
+    <!-- INICIO DEL BANNER -->
+    <div id="tituloPagina">
+      <h1>CALCULADORA DE COMPRAS</h1>
+    </div>
+    <!-- FIN DEL BANNER -->
+
+    <!-- INICIO DE TABLA -->
+    <div id="contenido">
+
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+          class="fa-light fa-plus"></i> Agregar</button>
+
+      <table class="table table-bordered mt-4" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">DETALLE</th>
+            <th scope="col">CANTIDAD</th>
+            <th scope="col">PRECIO UNITARIO</th>
+            <th scope="col">PRECIO</th>
+            <th scope="col">ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody id="productTable">
+          
+        </tbody>
+      </table>
+
+      <div class="card">
+        <div class="card-body">
+          <p>El subTotal es <span id="subtotalPagar">$ 0.00</span></p>
+          <p>El IVA es <span id="ivaPagar">$ 0.00</span></p>
+          <p>El Total a pagar es <span id="totalPagar">$ 0.00</span></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- MODDAL PARA AGREGAR UN NUEVO REGISTRO -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">DATOS DEL PRODUCTO</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <!-- INICIO DE FORMULARIO -->
+          <form id="formProducto">
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">DETALLE</label>
+              <input type="text" class="form-control" id="inputDetalle" name="detalle">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">CANTIDAD</label>
+              <input type="text" class="form-control" id="inputCantidad" name="cantidad">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">PRECIO UNITARIO</label>
+              <input type="text" class="form-control" id="inputPrecio" name="precioUnitario">
+            </div>     
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary" id="btnAgregar" data-bs-dismiss="modal">Agregar</button>
+            </div>
+
+          </form>
+          <!-- FIN DE FORMULARIO -->
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <script src="./assets/js/main.js"></script>
+
+  
+
+  <!-- JS BOOSTRAP -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

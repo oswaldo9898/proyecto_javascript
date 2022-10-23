@@ -1,0 +1,132 @@
+/* ESTILOS GENERALES  */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(230, 230, 235);
+}
+
+.wrap {
+    width: 1250px;
+    margin: 0px auto;
+}
+
+/* CABECERA */
+#header {
+    width: 100%;
+    height: 70px;
+    background-color: #000;
+    
+    color: #fff;
+}
+
+#logo {
+    display: flex;
+    height: 70px;
+    width: 35%;
+}
+
+.titulo {
+    align-self: center;
+    margin: 0 auto;
+    letter-spacing: 1px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 300ms;
+}
+
+#logo h3 {
+    display: block;
+    float: right;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 25px;
+    margin-top: 5px;
+    margin-right: 65px;
+    transition: all 800ms;
+}
+
+#logo:hover h3 {
+    animation: fromRight 500ms linear;
+}
+
+@keyframes fromRight {
+    from {
+        transform: translateX(200%);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+
+}
+
+/* TITULO DE PAGINA */
+#tituloPagina {
+    width: 95, 5%;
+    height: 100px;
+    border: 10px solid white;
+    background-color: #000;
+    box-shadow: 0px 0px 2px grey;
+    margin: 20px auto;
+    animation: backBanner 10s linear;
+    overflow: hidden;
+}
+
+#tituloPagina h1 {
+    display: block;
+    width: 700px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size: 45px;
+    font-weight: normal;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 1px black;
+    margin: 27px auto;
+    animation: showText 5s linear;
+}
+
+@keyframes showText {
+    0% {
+        transform: translateX(-600%) scale(5, 5);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(600%) scale(5, 5);
+        opacity: 1;
+    }
+
+    75% {
+        transform: translateX(-600%) scale(5, 5);
+        color: rgba(255, 255, 255, .8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0%) scale(1, 1);
+        text-shadow: 2px 2px 1px black;
+        color: white;
+        opacity: 1;
+    }
+}
+
+
+/* CONTENIDO */
+#contenido {
+    border: 10px solid white;
+    background-color: #fff;
+    box-shadow: 0px 0px 2px grey;
+    margin: 20px auto;
+    padding: 25px;
+}
+
+.border_tabla {
+    border: 1px solid black;
+}
+
+span {
+    font-weight: bold;
+}
