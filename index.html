@@ -57,12 +57,12 @@
       <table class="table table-bordered mt-4" >
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">DETALLE</th>
-            <th scope="col">CANTIDAD</th>
-            <th scope="col">PRECIO UNITARIO</th>
-            <th scope="col">PRECIO</th>
-            <th scope="col">ACCIONES</th>
+            <th class="text-center" scope="col">#</th>
+            <th class="text-center" scope="col">DETALLE</th>
+            <th class="text-center" scope="col">CANTIDAD</th>
+            <th class="text-center" scope="col">PRECIO UNITARIO</th>
+            <th class="text-center" scope="col">PRECIO</th>
+            <th class="text-center" scope="col">ACCIONES</th>
           </tr>
         </thead>
         <tbody id="productTable">
@@ -96,15 +96,15 @@
           <form id="formProducto">
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">DETALLE</label>
-              <input type="text" class="form-control" id="inputDetalle" name="detalle">
+              <input type="text" class="form-control" id="inputDetalle" name="detalle" required>
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">CANTIDAD</label>
-              <input type="text" class="form-control" id="inputCantidad" name="cantidad">
+              <input type="text" class="form-control" pattern="[0-9]+" id="inputCantidad" name="cantidad" required>
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">PRECIO UNITARIO</label>
-              <input type="text" class="form-control" id="inputPrecio" name="precioUnitario">
+              <input type="text" class="form-control" pattern="^[0-9]+(.[0-9]+)?$" id="inputPrecio" name="precioUnitario" required>
             </div>     
             
             <div class="modal-footer">

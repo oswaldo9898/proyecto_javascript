@@ -62,8 +62,8 @@ const agregarProductosTabla = () => {
 
     arrProductos.forEach((element, index) => {
         productTableRef.innerHTML += `<tr>
-            <td>${index+1}</td>
-            <td>${element.detalle}</td>
+            <td class="text-center">${index+1}</td>
+            <td class="text-center">${element.detalle}</td>
             <td class="text-center">${element.cantidad}</td>
             <td class="text-center">${element.precioUnitario.toFixed(2)}</td>
             <td class="text-center">${element.precioTotal.toFixed(2)}</td>
