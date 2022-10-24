@@ -137,6 +137,8 @@ const agregarProducto = (datosFormulario) => {
     let nuevoProducto = new Producto(codigo, detalleProducto, cantidadProducto, precioUnitarioProducto, precioTotal);
     arrProductos.push(nuevoProducto);
 
+    $('#exampleModal').modal('hide')
+
     guardarLocalStorage();
     agregarProductosTabla();
 

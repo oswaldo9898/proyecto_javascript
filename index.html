@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;700&display=swap" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
   <!-- sweetalert2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -23,8 +25,7 @@
 
   <!-- HOJA DE ESTILOS CSS -->
   <link rel="stylesheet" rel="stylesheet" href="./assets/css/styles.css">
-
-
+  <link rel="icon" href="./assets/img/calcular.png">
   <title>Calculadora</title>
 </head>
 
@@ -100,7 +101,7 @@
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">CANTIDAD</label>
-              <input type="text" class="form-control" pattern="[0-9]+" id="inputCantidad" name="cantidad" required>
+              <input type="number" min="1" class="form-control" pattern="^[0-9]+" id="inputCantidad" name="cantidad" required>
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">PRECIO UNITARIO</label>
@@ -109,7 +110,7 @@
             
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-primary" id="btnAgregar" data-bs-dismiss="modal">Agregar</button>
+              <button type="submit" class="btn btn-primary" id="btnAgregar">Agregar</button>
             </div>
 
           </form>
@@ -118,6 +119,30 @@
       </div>
     </div>
   </div>
+
+  <!--INICIO FOOTER-->
+  <footer class="bg-dark text-center text-white">
+    <div class="container p-4 pb-0">
+      <section class="mb-4">
+        <a class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/oswaldo.garces.54"
+          target="_blank" role="button"><i class="fab fa-facebook-f"></i></a>
+        <a class="btn btn-outline-light btn-floating m-1" href="https://twitter.com/" target="_blank" role="button"><i
+            class="fab fa-twitter"></i></a>
+        <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/oswaldogarces_/"
+          target="_blank" role="button"><i class="fab fa-instagram"></i></a>
+        <a class="btn btn-outline-light btn-floating m-1"
+          href="https://www.linkedin.com/in/oswaldo-antonio-garces-dorado-920115231/" target="_blank" role="button"><i
+            class="fab fa-linkedin-in"></i></a>
+        <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/oswaldo9898?tab=repositories"
+          target="_blank" role="button"><i class="fab fa-github"></i></a>
+      </section>
+    </div>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright:
+      <a class="text-white" href="#">OSWALDO GARCES</a>
+    </div>
+  </footer>
+  <!--FIN FOOTER-->
 
 
 
