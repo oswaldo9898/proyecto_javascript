@@ -2,17 +2,19 @@ let codigo = 0,
     cantProductos = 0,
     detalleProducto = '',
     cantidadProducto = 0,
-    precioUnitarioProducto = 0.0,
-    precioTotal = 0.0;
+    precioUnitarioProducto = 0.00,
+    precioTotal = 0.00;
     
 const porcentajeIVA = 0.12;
 let arrProductos = [];
 
+const insertDOMcontent = document.querySelector('#insertDOMcontent')
 let productTableRef = document.querySelector('#productTable');
 let subtotalPagar = document.querySelector('#subtotalPagar');
 let ivaPagar = document.querySelector('#ivaPagar');
 let totalPagar = document.querySelector('#totalPagar');
 const frmProducto = document.getElementById('formProducto');
+
 
 // CLASE PRODUCTOS
 class Producto {
@@ -29,7 +31,74 @@ class Producto {
 document.addEventListener("DOMContentLoaded", () => {
     arrProductos = JSON.parse(localStorage.getItem("productos")) || [];
     agregarProductosTabla();
+    consultarAPI();
+    // Seleccionamos los botones del card en un HTML Colection
+
 });
+
+
+const imprimirProductos = (productosAPI) => {
+    if( productosAPI !== undefined ){
+        productosAPI.forEach( element => {
+            const {id, title, price, image} = element;
+            insertDOMcontent.innerHTML += `<div class="col-6 col-md-4 col-lg-3 my-3 card-p">
+            <div class="card  h-100">
+                <img src="${image}" class="card-img-top imgShop" alt="${title}">
+                <div class="card-body">
+                <div class="info-card">
+                    <h5 class="card-title titulo-producto">${title}</h5>
+                    <small></small>
+                    <p class="precio"><span class="u-pull-right titulo-precio">$${price}</span></p>
+                    <hr>
+                    <p class="card-text"><a href="#" class="btn btn-primary w-100 btn-agregar" id="${id}">Agregar</a></p>
+                </div>
+                </div>
+            </div>
+        </div>`;
+        });
+    }
+}
+
+const seleccionarProductoAPI = (id, productosCargadosAPI) => {
+    let productoSeleccionado = productosCargadosAPI.find((element) => id == element.id);
+    datos = {
+        id: productoSeleccionado.id,
+        detalle: productoSeleccionado.title,
+        cantidad: 1,
+        precio: productoSeleccionado.price
+    }
+    
+    agregarProductoAPI(datos);
+}
+
+
+/** ESTA FUNCION CARGA LOS PRODUCTOS DESDE EL API */
+const consultarAPI = () => {
+    // PETICION AL API
+    fetch(`https://fakestoreapi.com/products`).then( response => {
+
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+
+        response.json().then( response => {
+            imprimirProductos(response);
+            
+            let buttonCard = document.querySelectorAll(".btn-agregar");
+            // Recorremos los botones asocimaos a un escuchador de eventos
+            buttonCard.forEach((element) => {
+                element.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    let id = e.target.id;
+                    seleccionarProductoAPI(id, response);
+                });
+            });
+        })
+    }).catch( error => {
+
+    })
+}
 
 
 /** ESTA FUNCION SE ENCARGA DEL CALCULO DE LOS VALORES
@@ -60,18 +129,19 @@ EL ARRAY arrProductos */
 const agregarProductosTabla = () => {
     productTableRef.innerHTML = ``;
 
-    arrProductos.forEach((element, index) => {
-        productTableRef.innerHTML += `<tr>
-            <td class="text-center">${index+1}</td>
-            <td class="text-center">${element.detalle}</td>
-            <td class="text-center">${element.cantidad}</td>
-            <td class="text-center">${element.precioUnitario.toFixed(2)}</td>
-            <td class="text-center">${element.precioTotal.toFixed(2)}</td>
-            <td class="text-center"><a href="#" id="${element.codigo}" class="btn btn-outline-danger borrar-curso" data-id="1"><i
-            class="fa-solid fa-trash" ></i> Eliminar</a></td>
-        </tr>`;
-
-    });
+    if(arrProductos.length > 0 ){
+        arrProductos.forEach((element, index) => {
+            productTableRef.innerHTML += `<tr>
+                <td class="text-center">${index+1}</td>
+                <td class="text-center">${element.detalle}</td>
+                <td class="text-center">${element.cantidad}</td>
+                <td class="text-center">${element.precioUnitario.toFixed(2)}</td>
+                <td class="text-center">${element.precioTotal.toFixed(2)}</td>
+                <td class="text-center"><a href="#" id="${element.codigo}" class="btn btn-outline-danger borrar-curso" data-id="1"><i
+                class="fa-solid fa-trash" ></i> Eliminar</a></td>
+            </tr>`;
+        });
+    }    
     calcularMontosPagar();
 
     let botonEliminar = document.querySelectorAll('#productTable tr td a');
@@ -98,7 +168,7 @@ const agregarProductosTabla = () => {
                     Swal.fire(
                         'Eliminado!',
                         'El registro ha sido eliminado.',
-                        'Éxito'
+                        'success'
                     )
                 }
             });
@@ -140,10 +210,25 @@ const agregarProducto = (datosFormulario) => {
     $('#exampleModal').modal('hide')
 
     guardarLocalStorage();
-    agregarProductosTabla();
-
-    
+    agregarProductosTabla();    
 };
+
+const agregarProductoAPI = (datosProducto) => {
+    
+    codigo = datosProducto.id;
+    detalleProducto = datosProducto.detalle;
+    cantidadProducto = datosProducto.cantidad;
+    precioUnitarioProducto = parseFloat(datosProducto.precio);
+    precioTotal = (cantidadProducto * precioUnitarioProducto);
+
+    let nuevoProducto = new Producto(codigo, detalleProducto, cantidadProducto, precioUnitarioProducto, precioTotal);
+    arrProductos.push(nuevoProducto);
+
+    guardarLocalStorage();
+    agregarProductosTabla();    
+};
+
+
 
 
 
