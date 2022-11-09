@@ -91,7 +91,6 @@ const consultarAPI = () => {
             // Recorremos los botones asocimaos a un escuchador de eventos
             buttonCard.forEach((element, index) => {
                 element.addEventListener("click", (e) => {
-                    element.classList.add('productoSeleccionado');
 
                     e.preventDefault();
                     let id = e.target.id;
