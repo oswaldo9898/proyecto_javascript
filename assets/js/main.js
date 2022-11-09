@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     arrProductos = JSON.parse(localStorage.getItem("productos")) || [];
     agregarProductosTabla();
     consultarAPI();
-    // Seleccionamos los botones del card en un HTML Colection
-
 });
 
 
@@ -48,9 +46,12 @@ const imprimirProductos = (productosAPI) => {
                 <div class="info-card">
                     <h5 class="card-title titulo-producto">${title}</h5>
                     <small></small>
-                    <p class="precio"><span class="u-pull-right titulo-precio">$${price}</span></p>
+                    <p class="precio">
+                        <span class="u-pull-right col-8 titulo-precio">$${price}</span>
+                        <input class="col-4 cantidad" type="number" value="1" min="1" max="100">
+                    </p>
                     <hr>
-                    <p class="card-text"><a href="#" class="btn btn-primary w-100 btn-agregar" id="${id}">Agregar</a></p>
+                    <p class="card-text"><a href="#" class="btn btn-primary w-100 btn-agregar" id="${id}" >Agregar</a></p>
                 </div>
                 </div>
             </div>
@@ -59,12 +60,12 @@ const imprimirProductos = (productosAPI) => {
     }
 }
 
-const seleccionarProductoAPI = (id, productosCargadosAPI) => {
+const seleccionarProductoAPI = (id, cantidad, productosCargadosAPI) => {
     let productoSeleccionado = productosCargadosAPI.find((element) => id == element.id);
     datos = {
         id: productoSeleccionado.id,
         detalle: productoSeleccionado.title,
-        cantidad: 1,
+        cantidad: cantidad,
         precio: productoSeleccionado.price
     }
     
@@ -81,17 +82,21 @@ const consultarAPI = () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-
         response.json().then( response => {
             imprimirProductos(response);
             
             let buttonCard = document.querySelectorAll(".btn-agregar");
+            let cantidadSeleccionado = document.querySelectorAll(".cantidad");
+
             // Recorremos los botones asocimaos a un escuchador de eventos
-            buttonCard.forEach((element) => {
+            buttonCard.forEach((element, index) => {
                 element.addEventListener("click", (e) => {
+                    element.classList.add('productoSeleccionado');
+
                     e.preventDefault();
                     let id = e.target.id;
-                    seleccionarProductoAPI(id, response);
+                    let cantidad = cantidadSeleccionado[index].value;
+                    seleccionarProductoAPI(id, cantidad, response);
                 });
             });
         })
@@ -137,11 +142,12 @@ const agregarProductosTabla = () => {
                 <td class="text-center">${element.cantidad}</td>
                 <td class="text-center">${element.precioUnitario.toFixed(2)}</td>
                 <td class="text-center">${element.precioTotal.toFixed(2)}</td>
-                <td class="text-center"><a href="#" id="${element.codigo}" class="btn btn-outline-danger borrar-curso" data-id="1"><i
+                <td class="text-center"><a href="#" id="${element.codigo}" class="btn btn-outline-danger borrar-curso"><i
                 class="fa-solid fa-trash" ></i> Eliminar</a></td>
             </tr>`;
         });
-    }    
+    }
+    
     calcularMontosPagar();
 
     let botonEliminar = document.querySelectorAll('#productTable tr td a');
@@ -150,7 +156,7 @@ const agregarProductosTabla = () => {
 
             Swal.fire({
                 title: '¿Está seguro?',
-                text: "No podrás revertir esto.!",
+                text: "No podrás revertir esto!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -194,7 +200,7 @@ frmProducto.addEventListener('submit', (event) => {
 });
 
 
-/** FUNCION MEDIANTE LA CUAL SE AGREGA UN NUEVO PRODUCTO AL ARRAY 
+/** FUNCION MEDIANTE LA CUAL SE AGREGA UN NUEVO PRODUCTO AL ARRAY POR MEDIO DEL FORMULARIO
  * arrProducto
  */
 const agregarProducto = (datosFormulario) => {
@@ -210,9 +216,18 @@ const agregarProducto = (datosFormulario) => {
     $('#exampleModal').modal('hide')
 
     guardarLocalStorage();
-    agregarProductosTabla();    
+    agregarProductosTabla();
+    Swal.fire(
+        'Agregado!',
+        'El producto ha sido agregado.',
+        'success'
+    );
 };
 
+
+/** FUNCION MEDIANTE LA CUAL SE AGREGA UN NUEVO PRODUCTO AL ARRAY SELECCIONADO DEL API
+ * arrProducto
+ */
 const agregarProductoAPI = (datosProducto) => {
     
     codigo = datosProducto.id;
@@ -221,11 +236,25 @@ const agregarProductoAPI = (datosProducto) => {
     precioUnitarioProducto = parseFloat(datosProducto.precio);
     precioTotal = (cantidadProducto * precioUnitarioProducto);
 
-    let nuevoProducto = new Producto(codigo, detalleProducto, cantidadProducto, precioUnitarioProducto, precioTotal);
-    arrProductos.push(nuevoProducto);
+    let buscarProducto = arrProductos.filter(producto => producto.codigo == codigo );
 
-    guardarLocalStorage();
-    agregarProductosTabla();    
+    if( buscarProducto.length === 0 ){
+        let nuevoProducto = new Producto(codigo, detalleProducto, cantidadProducto, precioUnitarioProducto, precioTotal);
+        arrProductos.push(nuevoProducto);
+        guardarLocalStorage();
+        agregarProductosTabla();
+        Swal.fire(
+            'Agregado!',
+            'El producto ha sido agregado.',
+            'success'
+        );
+    }else{
+        Swal.fire(
+            'Upss!',
+            'El producto ya se encuentra agregado.',
+            'error'
+        );
+    }
 };
 
 
